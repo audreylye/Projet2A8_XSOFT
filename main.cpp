@@ -1,18 +1,13 @@
 #include "mainwindow.h"
-#include "connexion.h"
+#include "connection.h"
 #include <QApplication>
-
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    connexion  c;
-    try {
-        c.createConnection();
-        w.show();
-    } catch (QString s) {
-       qDebug()<<s;
-    }
+    Connection c;
+    c.createconnect();
+    w.show();
     return a.exec();
 }

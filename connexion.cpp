@@ -1,25 +1,29 @@
 #include "connexion.h"
-#include <QDebug>
 
-connexion::connexion( )
+class connexionData : public QSharedData
+{
+public:
+
+};
+
+connexion::connexion() : data(new connexionData)
 {
 
 }
-bool connexion::createConnection()
+
+connexion::connexion(const connexion &rhs) : data(rhs.data)
 {
-    db = QSqlDatabase::addDatabase("QODBC");
-    db.setHostName("127.0.0.1");
-    db.setDatabaseName("Source_Projet2A");
-    db.setUserName("selim");
-    db.setPassword("esprit");
-    if(!db.open())
-    {
-        qDebug() << "ERROR CANNOT CONNECT TO DATABASE..." ;
-        return false;
-    }
-    else
-    {
-        qDebug()<< "CONNECTION ESTABLISHED TO DATABASE..." ;
-        return true;
-    }
+
+}
+
+connexion &connexion::operator=(const connexion &rhs)
+{
+    if (this != &rhs)
+        data.operator=(rhs.data);
+    return *this;
+}
+
+connexion::~connexion()
+{
+
 }

@@ -1,21 +1,25 @@
 #ifndef CONNEXION_H
 #define CONNEXION_H
 
-#include <QDebug>
-#include <QString>
-#include <QSqlQuery>
-#include <QSqlDatabase>
+//#include <QDeclarativeItem>
+#include <QMainWindow>
+#include <QObject>
+//#include <QQuickItem>
+#include <QSharedDataPointer>
+#include <QWidget>
+
+class connexionData;
 
 class connexion
 {
-private:
-
 public:
     connexion();
+    connexion(const connexion &);
+    connexion &operator=(const connexion &);
+    ~connexion();
 
-    QSqlDatabase db;
-
-    bool createConnection();
-
+private:
+    QSharedDataPointer<connexionData> data;
 };
+
 #endif // CONNEXION_H
