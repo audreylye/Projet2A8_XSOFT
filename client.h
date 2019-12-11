@@ -8,7 +8,7 @@
 #include <QSharedDataPointer>
 #include <QWidget>
 #include <QSqlQueryModel>
-#include <qtableview.h>
+
 class ClientData;
 
 class Client
@@ -31,14 +31,13 @@ public:
     QString getSEXE () {return SEXE ;}
     QSqlQuery client2();
     int nbclients();
-    void Trieclien(QTableView *tab);
 
     bool ajouter_client(QString NOM,QString PRENOM,QString NUMPASSPORT,QString DN,QString TEL,QString ADDRESSE,QString EMAIL,QString NBRVOLS,QString SEXE);
 QSqlQueryModel * afficherclient();
 bool supprimer_client(QString ch);
 bool modifier_client(QString NOM,QString PRENOM,QString NUMPASSPORT,QString DN,QString TEL,QString ADDRESSE,QString EMAIL,QString NBRVOLS,QString SEXE);
 void  client1(QString txt);
-void chercher_client(QString codeabarre,QTableView * tab);
+
 private:
     QSharedDataPointer<ClientData> data;
 QString NOM , PRENOM ,NUMPASSPORT,DN,TEL,ADDRESSE ,EMAIL ,NBRVOLS, SEXE ;

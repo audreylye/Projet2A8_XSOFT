@@ -46,9 +46,6 @@ Client::~Client()
 {
 
 }
-
-
-
 bool Client::modifier_client(QString NOM,QString PRENOM,QString NUMPASSPORT,QString DN,QString TEL,QString ADDRESSE,QString EMAIL,QString NBRVOLS,QString SEXE)
 {
     QSqlQuery query;
@@ -113,26 +110,7 @@ model->rowCount();
 QSqlQuery Client::client2()
 {
     QSqlQuery q;
-    QString txt="vsqdv";
-    q.prepare("select * from CLIENT where NUMPASSPORT='"+txt+"'  ")  ;
-
-    if(q.exec()){
-    while (q.next()) {
-       NOM = q.value(0).toString();
-       PRENOM = q.value(1).toString();
-         NUMPASSPORT = q.value(2).toString();
-         DN= q.value(3).toString();
-     TEL= q.value(4).toString();
-     ADDRESSE= q.value(5).toString();
-     EMAIL = q.value(6).toString();
-     NBRVOLS = q.value(7).toString();
-       SEXE = q.value(8).toString();
-
-
-
-
-}}
-    qDebug()<<SEXE;
+    q.prepare("select NUMPASSPORT  from CLIENT   ")  ;
 
     return  q;
 
@@ -182,6 +160,8 @@ QSqlQueryModel * Client::afficherclient()
     model->setHeaderData(6, Qt::Horizontal, QObject::tr("EMAIL"));
     model->setHeaderData(7, Qt::Horizontal, QObject::tr("NOMBREDEVOL"));
     model->setHeaderData(8, Qt::Horizontal, QObject::tr("SEXE"));
+
+
     return model;
 }
 
@@ -204,30 +184,8 @@ bool Client::supprimer_client(QString ch)
 
 
 
-void Client::Trieclien(QTableView *tab)
-      {
-          QSqlQuery *qry=new QSqlQuery(QSqlDatabase::defaultConnection);
-          QSqlQueryModel *model=new QSqlQueryModel;
-          qry->prepare("select * from CLIENT ORDER BY NOM");
-          if (qry->exec())
-          {
-              qDebug()<<"trie ok ";
-             model->setQuery(*qry);
-              tab->setModel(model);
 
 
-          }
 
-      }
-
-void Client::chercher_client(QString codeabarre,QTableView * tab)
-{  QSqlQueryModel *model = new QSqlQueryModel;
-    QSqlQuery query ;
-
-          QString cherche="%";
-          cherche+=codeabarre+"%";
-          model->setQuery("SELECT * FROM CLIENT where NOM like '"+cherche+"' or PRENOM like '"+cherche+"' or NUMPASSPORT like '"+cherche+"' or DN like '"+cherche+"'or TEL like '"+cherche+"'or ADDRESSE like '"+cherche+"'or EMAIL like '"+cherche+"' or NBRVOLS like '"+cherche+"' or SEXE like '"+cherche+"'    "  );
-           tab->setModel(model);
-}
 
 
