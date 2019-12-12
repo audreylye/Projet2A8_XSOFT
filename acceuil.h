@@ -26,6 +26,7 @@ private:
     Ui::acceuil *ui;
     agences *Agences;
     compte *Compte;
+
 };
 
 #endif // ACCEUIL_H

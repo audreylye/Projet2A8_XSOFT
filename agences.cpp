@@ -7,9 +7,10 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include"QDate"
-
+#include <QIntValidator>
+#include <QSystemTrayIcon>
 #include <QMessageBox>
-
+#include <QIcon>
 agences::agences(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::agences)
@@ -38,16 +39,17 @@ void agences::on_login_2_clicked()
 
 void agences::on_login_clicked()
 {
+    agences::notif("Agence","Agence ajoutee ");
     int nb_employee = ui->lineEdit_nb->text().toInt();
         QString nom= ui->lineEdit_nom->text();
         QString lieu= ui->lineEdit_lieu->text();
+        ui->lineEdit_nb->setValidator( new QIntValidator(0, 9999, this) );
       ajouter_ag a(nom,lieu,nb_employee);
       bool test=a.ajouter(nom,lieu,nb_employee);
       if(test)
     {ui->tabagence->setModel(tmpagence.afficher());//refresh
-    QMessageBox::information(nullptr, QObject::tr("Ajouter une agence"),
-                      QObject::tr("agence ajouté.\n"
-                                  "Click Cancel to exit."), QMessageBox::Cancel);
+    QMessageBox::information(this,"information","Ajouter une agence");
+
 }
 }
 
@@ -72,14 +74,13 @@ void agences::on_supprimer_clicked()
 
 
 void agences::on_supprimer_3_clicked()
-{
+{    agences::notif("Agence","Agence supprimé ");
+
     int nb_employee = ui->lineEdit_supprimer->text().toInt();
     bool test=tmpagence.supprimer(nb_employee);
     if(test)
     {ui->tabagence->setModel(tmpagence.afficher());
-        QMessageBox::information(nullptr, QObject::tr("Supprimer une agence"),
-                    QObject::tr("Etudiant supprimé.\n"
-                                "Click Cancel to exit."), QMessageBox::Cancel);
+       QMessageBox::information(this,"information","agence supprimé");
 
     }
     else{
@@ -108,6 +109,8 @@ void agences::on_login_9_clicked()
 
 void agences::on_modifier_2_clicked()
 {
+    agences::notif("Agence","Agence modifié ");
+
     int nb_employee = ui->lineEdit_id_2->text().toInt();
     QString nom= ui->lineEdit_nom_2->text();
     QString lieu = ui->lineEdit_lieu_2->text();
@@ -116,9 +119,7 @@ void agences::on_modifier_2_clicked()
   if(test)
 {
       ui->tabagence->setModel(tmpagence.afficher());//refresh
-QMessageBox::information(nullptr, QObject::tr("Modifier une agence"),
-                  QObject::tr("agence modifié.\n"
-                              "Click Cancel to exit."), QMessageBox::Cancel);
+QMessageBox::information(this,"information","agence modifié");
 
 }
   else
@@ -131,7 +132,17 @@ void agences::on_rechercher_clicked()
     int nb_employee = ui->lineEdit_id_2->text().toInt();
     ui->tabagence_2->setModel(tmpagence.recherche(nb_employee));
 }
+void agences::notif(QString t,QString m)
+{
 
+    QPixmap p(32,32);
+    p.load("C:/Users/ASUS/Desktop/libertad/colored.png");
+    QIcon icon(p);
+    QSystemTrayIcon n(icon);
+    n.setVisible(true);
+    n.showMessage(t,m,QSystemTrayIcon::Information,1000);
+
+}
 void agences::on_Imprimer_clicked()
 {
     QString strStream;
@@ -182,4 +193,42 @@ void agences::on_Imprimer_clicked()
             }
 
             delete document;
+}
+void agences::update_label()
+{
+    data=A.read_from_arduino();
+
+    if(data=="1")
+{
+          agences::notif("DANGER","Detection de fumée ");
+}
+        //ui->label_3->setText("ON"); // si les données reçues de arduino via la liaison série sont égales à 1
+    // alors afficher ON
+
+    //else if (data=="0")
+
+        //ui->label_3->setText("OFF");   // si les données reçues de arduino via la liaison série sont égales à 0
+     //alors afficher ON
+}
+
+void agences::on_lineEdit_nb_textChanged(const QString &arg1)
+{
+    ui->lineEdit_nb->setText(controletel(ui->lineEdit_nb->text()));
+
+}
+QString agences::controletel(QString p )
+{
+    QString carac = "azertyuiopmlkjhgfdsqwxcvbn";
+
+
+
+
+    for (int i = 0; i < carac.length(); ++i) {
+
+
+            p.replace(carac.at(i),"");
+
+
+}
+    return  p ;
 }

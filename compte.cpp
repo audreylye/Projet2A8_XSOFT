@@ -6,6 +6,8 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include"QDate"
+#include <QSystemTrayIcon>
+#include <QIcon>
 
 compte::compte(QWidget *parent) :
     QDialog(parent),
@@ -35,6 +37,8 @@ void compte::on_login_2_clicked()
 
 void compte::on_login_clicked()
 {
+    compte::notif("Compte","Compte ajouté");
+
     int password = ui->lineEdit_password->text().toInt();
         QString username= ui->lineEdit_username->text();
         int id= ui->lineEdit_ID->text().toInt();
@@ -42,12 +46,20 @@ void compte::on_login_clicked()
       bool test=c.ajouter(username,password,id);
       if(test)
     {ui->tabcompte->setModel(tmpcompte.afficher());//refresh
-    QMessageBox::information(nullptr, QObject::tr("Ajouter un compte"),
-                      QObject::tr("compte ajouté.\n"
-                                  "Click Cancel to exit."), QMessageBox::Cancel);
+    QMessageBox::information(this,"information","Compte ajouté.");
 }
 }
+void compte::notif(QString t,QString m)
+{
 
+    QPixmap p(32,32);
+    p.load("C:/Users/ASUS/Desktop/libertad/colored.png");
+    QIcon icon(p);
+    QSystemTrayIcon n(icon);
+    n.setVisible(true);
+    n.showMessage(t,m,QSystemTrayIcon::Information,1000);
+
+}
 void compte::on_afficher_clicked()
 {
     ui->stackedWidget->show();
@@ -75,13 +87,13 @@ void compte::on_supprimer_clicked()
 
 void compte::on_supp_clicked()
 {
+    compte::notif("Compte","Compte supprimé");
+
     int id= ui->lineEdit_supp->text().toInt();
     bool test=tmpcompte.supprimer(id);
     if(test)
     {ui->tabcompte->setModel(tmpcompte.afficher());//refresh
-        QMessageBox::information(nullptr, QObject::tr("Supprimer une agence"),
-                    QObject::tr("Etudiant supprimé.\n"
-                                "Click Cancel to exit."), QMessageBox::Cancel);
+        QMessageBox::information(this,"information","compte supprimé");
 
     }
     else{
@@ -105,6 +117,8 @@ void compte::on_modifier_clicked()
 
 void compte::on_modifier_2_clicked()
 {
+    compte::notif("Compte","Compte modifié");
+
     int id = ui->lineEdit_id_2->text().toInt();
     int  password= ui->lineEdit_password_2->text().toInt();
     QString username = ui->lineEdit_username2->text();
@@ -113,9 +127,7 @@ void compte::on_modifier_2_clicked()
   if(test)
 {
       ui->tabcompte->setModel(tmpcompte.afficher());//refresh
-QMessageBox::information(nullptr, QObject::tr("Modifier une agence"),
-                  QObject::tr("agence modifié.\n"
-                              "Click Cancel to exit."), QMessageBox::Cancel);
+QMessageBox::information(this,"information","Compte modifié");
 
 }
   else
@@ -185,5 +197,27 @@ void compte::on_supp_2_clicked()
 void compte::on_login_10_clicked()
 {
     ui->stackedWidget->hide();
+
+}
+QString compte::controletel(QString p )
+{
+    QString carac = "azertyuiopmlkjhgfdsqwxcvbn";
+
+
+
+
+    for (int i = 0; i < carac.length(); ++i) {
+
+
+            p.replace(carac.at(i),"");
+
+
+}
+    return  p ;
+}
+
+void compte::on_lineEdit_ID_textChanged(const QString &arg1)
+{
+    ui->lineEdit_ID->setText(controletel(ui->lineEdit_ID->text()));
 
 }

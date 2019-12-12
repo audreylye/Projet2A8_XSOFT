@@ -2,7 +2,7 @@
 #define COMPTE_H
 #include <QDialog>
 #include "ajouter_compte.h"
-
+#include "arduino.h"
 #include <QDialog>
 
 namespace Ui {
@@ -45,6 +45,9 @@ private slots:
     void on_supp_2_clicked();
 
     void on_login_10_clicked();
+     void notif(QString t,QString m);
+     QString controletel(QString p );
+     void on_lineEdit_ID_textChanged(const QString &arg1);
 
 private:
     Ui::compte *ui;

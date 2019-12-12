@@ -31,7 +31,7 @@ QSqlQueryModel * ajouter_ag::afficher()
 {
     QSqlQueryModel * model= new QSqlQueryModel();
 
-model->setQuery("select * from agence");
+model->setQuery("select * from agence order by nom desc");
 model->setHeaderData(0, Qt::Horizontal, QObject::tr("nom"));
 model->setHeaderData(1, Qt::Horizontal, QObject::tr("lieu"));
 model->setHeaderData(2, Qt::Horizontal, QObject::tr("ID"));

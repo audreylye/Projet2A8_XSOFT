@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui serialport
 QT       += sql
 QT       += printsupport
 QT       += multimedia
@@ -25,6 +25,7 @@ SOURCES += \
     agences.cpp \
     ajouter_ag.cpp \
     ajouter_compte.cpp \
+    arduino.cpp \
     compte.cpp \
     connexion.cpp \
     main.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     agences.h \
     ajouter_ag.h \
     ajouter_compte.h \
+    arduino.h \
     compte.h \
     connexion.h \
     mainwindow.h
@@ -49,3 +51,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resource.qrc

@@ -32,7 +32,7 @@ QSqlQueryModel * ajouter_compte::afficher()
 {
     QSqlQueryModel * model= new QSqlQueryModel();
 
-model->setQuery("select * from compte");
+model->setQuery("select * from compte order by username asc");
 model->setHeaderData(0, Qt::Horizontal, QObject::tr("username"));
 model->setHeaderData(1, Qt::Horizontal, QObject::tr("password"));
 model->setHeaderData(2, Qt::Horizontal, QObject::tr("id"));

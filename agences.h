@@ -2,6 +2,7 @@
 #define AGENCES_H
 #include "ajouter_ag.h"
 #include <QDialog>
+#include "arduino.h"
 
 namespace Ui {
 class agences;
@@ -14,6 +15,7 @@ class agences : public QDialog
 public:
     explicit agences(QWidget *parent = nullptr);
     ~agences();
+    QString controletel(QString p );
 
 private slots:
     void on_ajouter_clicked();
@@ -44,9 +46,16 @@ private slots:
 
     void on_Imprimer_clicked();
 
+    void update_label();
+    void notif(QString t,QString m);
+    void on_lineEdit_nb_textChanged(const QString &arg1);
+
 private:
     Ui::agences *ui;
     ajouter_ag tmpagence;
+    QByteArray data; // variable contenant les données reçues
+
+    Arduino A; // objet temporaire
 };
 
 #endif // AGENCES_H
